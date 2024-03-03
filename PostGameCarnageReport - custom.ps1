@@ -64,6 +64,7 @@ function GetPostGameCarnageReport {
                 $kills = [int]$player.Values.kills.basic.value
                 $deaths = [int]$player.Values.deaths.basic.displayValue
                 $duration = $player.Values.activityDurationSeconds.basic.displayValue
+                $timePlayed = $player.Values.timePlayedSeconds.basic.displayValue
                 $date = $Response.period
 
                 $row = New-Object PSObject -Property @{
@@ -71,7 +72,8 @@ function GetPostGameCarnageReport {
                     "MembershipID" = "https://b.moons.bio/" + $membershipId
                     "Kills" = $kills 
                     "Deaths" = $deaths 
-                    "Completed" = "✅"
+                    "Completed" = "✅"                    
+                    "TimePlayed" = $timePlayed
                 }
 
                 $table += $row
@@ -96,7 +98,8 @@ function GetPostGameCarnageReport {
                                             @{Label="URL"; Expression={$_.MembershipID}}, 
                                             @{Label="Kills"; Expression={$_.Kills}}, 
                                             @{Label="Deaths"; Expression={$_.Deaths}}, 
-                                            @{Label="Completed"; Expression={$_.Completed}} -Wrap
+                                            @{Label="Completed"; Expression={$_.Completed}}, 
+                                            @{Label="Time Played"; Expression={$_.timePlayed}} -Wrap
             Write-Host $divider -ForegroundColor Blue
         }
     } else {
